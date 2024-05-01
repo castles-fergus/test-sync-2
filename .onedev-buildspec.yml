@@ -14,3 +14,20 @@ jobs:
   maxRetries: 3
   retryDelay: 30
   timeout: 3600
+- name: Pull from GitHub
+  steps:
+  - !PullRepository
+    name: pull
+    remoteUrl: https://github.com/castles-fergus/test-sync-2
+    passwordSecret: github_token
+    refs: refs/heads/* refs/tags/*
+    withLfs: false
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !ScheduleTrigger
+    cronExpression: 0 */3 * * * ?
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
